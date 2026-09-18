@@ -7,25 +7,43 @@ import model.SporterModel;
 import view.SporterView;
 
 public class SporterController {
-    private SporterView sporterView;
+    private SporterView view;
+    private Scanner scanner;
     private SporterModel sporter;
     private List<SporterModel> sporters = new ArrayList<>();
 
-    public SporterController(SporterView sporterView) {
-        this.sporterView = sporterView;
+    public SporterController(SporterView view, Scanner scanner) {
+        this.view = view;
+        this.scanner = scanner;
+    }   
+
+    public void runSporterMenu() {
+        boolean back = false;
+    
+        while (!back) {
+            view.showSporterMenu();
+            int choice = scanner.nextInt();
+    
+            switch (choice) {
+                case 1:
+                    // create sporter (later)
+                    break;
+                case 2:
+                    view.displayAllSporters(sporters);
+                    break;
+                case 3:
+                    // view one sporter (later)
+                    break;
+                case 6:
+                    back = true;
+                    break;
+                default:
+                    view.showMessage("Invalid choice.");
+            }
+        }
     }
 
-    public void readAllSporters() {
-        if (sporters.isEmpty()) {
-            sporterView.showMessage("No sporters found.");
-            return;
-        }
-        for (int i = 0; i < sporters.size(); i++) {
-            sporterView.displaySporterInfo(sporters.get(i), i);
-        }
-    } 
-
     public void displaySporterInfo() {
-        sporterView.displaySporterInfo(sporter);
+        view.displaySporterInfo(sporter);
     }
 }

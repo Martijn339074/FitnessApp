@@ -7,6 +7,7 @@ public class SporterModel {
     private String email;
     private String phone;
     private String address;
+    
     public SporterModel(String name, int age, String gender, String email, String phone, String address) {
         this.name = name;
         this.age = age;
