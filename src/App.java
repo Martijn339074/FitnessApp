@@ -5,7 +5,7 @@ import controller.SporterController;
 public class App {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
-        boolean running = true; // make variable if app is running.
+        boolean running = true; 
         SporterView sporterView = new SporterView();
         SporterController sporterController = new SporterController(sporterView, scanner);
 
@@ -18,7 +18,7 @@ public class App {
             System.out.println("4. Exit");
             System.out.print("Choice: ");
 
-            int choice = scanner.nextInt(); // create variable for options
+            int choice = scanner.nextInt();
             
             switch (choice) {
                 case 1:
@@ -32,7 +32,7 @@ public class App {
                     break;
                 case 4:
                     System.err.println("Exiting");
-                    running = false; // stops the app
+                    running = false;
                     break;
                 default:
                     break;

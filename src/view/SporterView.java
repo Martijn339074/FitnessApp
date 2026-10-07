@@ -15,7 +15,7 @@ public class SporterView {
     }
 
     public void showSporterMenu() {
-        System.out.println("\n--- Sporter CRUD ---");
+        System.out.println("\n--- Sporters ---");
         System.out.println("1. Create sporter");
         System.out.println("2. View all sporters");
         System.out.println("3. View one sporter");

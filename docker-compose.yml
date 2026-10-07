@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16
+    container_name: fitnessapp-db
+    environment:
+      POSTGRES_DB: fitnessapp
+      POSTGRES_USER: fitnessuser
+      POSTGRES_PASSWORD: fitnesspass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/null  # use a named volume in real setup
+
+volumes:
+  postgres_data:
