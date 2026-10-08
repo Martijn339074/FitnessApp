@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Scanner;
 import model.SporterModel;
 import view.SporterView;
+import dao.SporterDAO;
 
 public class SporterController {
     private SporterView view;
     private Scanner scanner;
     private SporterModel sporter;
     private List<SporterModel> sporters = new ArrayList<>();
+    private SporterDAO sporterDAO = new SporterDAO();
 
     public SporterController(SporterView view, Scanner scanner) {
         this.view = view;
@@ -25,14 +27,8 @@ public class SporterController {
             int choice = scanner.nextInt();
     
             switch (choice) {
-                case 1:
-                    // create sporter (later)
-                    break;
                 case 2:
-                    view.displayAllSporters(sporters);
-                    break;
-                case 3:
-                    // view one sporter (later)
+                    view.showAllSporters(sporters);
                     break;
                 case 6:
                     back = true;
@@ -43,7 +39,8 @@ public class SporterController {
         }
     }
 
-    public void displaySporterInfo() {
-        view.displaySporterInfo(sporter);
+    public void showAllSporters() {
+        List<SporterModel> sporters = sporterDAO.findAll();
+        view.showAllSporters(sporters);
     }
 }

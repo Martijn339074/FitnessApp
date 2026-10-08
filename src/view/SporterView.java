@@ -25,7 +25,7 @@ public class SporterView {
         System.out.print("Choice: ");
     }
 
-    public void displayAllSporters(List<SporterModel> sporters) {
+    public void showAllSporters(List<SporterModel> sporters) {
         if (sporters.isEmpty()) {
             showMessage("No sporters found.");
             return;
