@@ -1,7 +1,5 @@
 package model;
 
-import model.UserModel;
-
 public class SporterModel extends UserModel {
     private String name;
     private int age;
@@ -27,22 +25,7 @@ public class SporterModel extends UserModel {
         return gender;
     }
 
-    public String getEmail() {
-        return email;
-    }
-    
-    public String getPhone() {
-        return phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
     public void setName(String name) { this.name = name; }
     public void setAge(int age) { this.age = age; }
     public void setGender(String gender) { this.gender = gender; }
-    public void setEmail(String email) { this.email = email; }
-    public void setPhone(String phone) { this.phone = phone; }
-    public void setAddress(String address) { this.address = address; }
 }

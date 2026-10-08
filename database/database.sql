@@ -1,29 +1,31 @@
-create database if not exists fitnessapp;
+-- PostgreSQL schema for FitnessApp (database: fitnessapp)
+-- Run: docker exec -i fitnessapp-db psql -U fitnessuser -d fitnessapp < database/database.sql
 
-create table if not exists users (
-    id serial primary key,
-    username varchar(255) not null,
-    password varchar(255) not null,
-    email varchar(255) not null,
-    phone varchar(255) not null,
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL
 );
 
-create table if not exists sporters (
-    id serial primary key,
-    name varchar(255) not null,
-    age int not null,
-    gender varchar(255) not null,
-    email varchar(255) not null,
-    phone varchar(255) not null,
-    address varchar(255) not null,
+CREATE TABLE IF NOT EXISTS sporters (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL UNIQUE REFERENCES users(id),
+    name VARCHAR(255) NOT NULL,
+    age INT NOT NULL,
+    gender VARCHAR(255) NOT NULL
 );
 
 INSERT INTO users (username, password, email, phone, address)
 VALUES
   ('john', 'password', 'john@email.com', '0612345678', 'Utrecht'),
-  ('jane', 'password', 'jane@email.com', '0687654321', 'Amsterdam');
+  ('jane', 'password', 'jane@email.com', '0687654321', 'Amsterdam')
+ON CONFLICT (username) DO NOTHING;
 
-INSERT INTO sporters (name, age, gender, email, phone, address)
+INSERT INTO sporters (user_id, name, age, gender)
 VALUES
-  ('John Doe', 25, 'Male', 'john@email.com', '0612345678', 'Utrecht'),
-  ('Jane Smith', 30, 'Female', 'jane@email.com', '0687654321', 'Amsterdam');
+  (1, 'John Doe', 25, 'Male'),
+  (2, 'Jane Smith', 30, 'Female')
+ON CONFLICT (user_id) DO NOTHING;
