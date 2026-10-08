@@ -1,20 +1,18 @@
 package model;
 
-public class SporterModel {
+import model.UserModel;
+
+public class SporterModel extends UserModel {
     private String name;
     private int age;
     private String gender;
-    private String email;
-    private String phone;
-    private String address;
-    
-    public SporterModel(String name, int age, String gender, String email, String phone, String address) {
+    public SporterModel(int id, String username, String password,
+                        String email, String phone, String address,
+                        String name, int age, String gender) {
+        super(id, username, password, email, phone, address);
         this.name = name;
         this.age = age;
         this.gender = gender;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
     }
 
     public String getName() {
