@@ -1,9 +1,10 @@
 package view;
-import model.SporterModel;
-import controller.SporterController;
+
 import java.util.List;
+import model.SporterModel;
 
 public class SporterView {
+
     public void displaySporterInfo(SporterModel sporter) {
         System.out.println("Sporter Info");
         System.out.println("Name: " + sporter.getName());
@@ -35,6 +36,14 @@ public class SporterView {
             System.out.println("\nSporter #" + (i + 1));
             displaySporterInfo(sporters.get(i));
         }
+    }
+
+    public void showCreateSporterHeader() {
+        System.out.println("\n--- Create Sporter ---");
+    }
+
+    public void prompt(String label) {
+        System.out.print(label + ": ");
     }
 
     public void showMessage(String message) {
