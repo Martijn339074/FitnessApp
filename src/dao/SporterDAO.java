@@ -44,7 +44,9 @@ public class SporterDAO {
             VALUES (?, ?, ?, ?)
             """;
 
-        try (Connection conn = DatabaseConnection.getConnection()) {
+        Connection conn = null;
+        try {
+            conn = DatabaseConnection.getConnection();
             conn.setAutoCommit(false);
 
             int userId;
@@ -76,7 +78,22 @@ public class SporterDAO {
             return true;
         } catch (SQLException e) {
             System.err.println("Error creating sporter: " + e.getMessage());
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException rollbackEx) {
+                    System.err.println("Rollback failed: " + rollbackEx.getMessage());
+                }
+            }
             return false;
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException closeEx) {
+                    System.err.println("Error closing connection: " + closeEx.getMessage());
+                }
+            }
         }
     }
 
