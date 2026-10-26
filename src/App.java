@@ -1,7 +1,9 @@
 import java.util.Scanner;
+import view.CoachView;
 import view.ExerciseView;
 import view.SporterView;
 import view.UserView;
+import controller.CoachController;
 import controller.ExerciseController;
 import controller.SporterController;
 import controller.UserController;
@@ -14,6 +16,8 @@ public class App {
         SporterController sporterController = new SporterController(sporterView, scanner);
         UserView userView = new UserView();
         UserController userController = new UserController(userView, scanner);
+        CoachView coachView = new CoachView();
+        CoachController coachController = new CoachController(coachView, scanner);
         ExerciseView exerciseView = new ExerciseView();
         ExerciseController exerciseController = new ExerciseController(exerciseView, scanner);
 
@@ -23,8 +27,9 @@ public class App {
             System.out.println("1. Log in");
             System.out.println("2. Sign up");
             System.out.println("3. See sporter info");
-            System.out.println("4. Exercises");
-            System.out.println("5. Exit");
+            System.out.println("4. See coach info");
+            System.out.println("5. Exercises");
+            System.out.println("6. Exit");
             System.out.print("Choice: ");
 
             int choice = scanner.nextInt();
@@ -41,9 +46,12 @@ public class App {
                     sporterController.runSporterMenu();
                     break;
                 case 4:
-                    exerciseController.runExerciseMenu();
+                    coachController.runCoachMenu();
                     break;
                 case 5:
+                    exerciseController.runExerciseMenu();
+                    break;
+                case 6:
                     System.out.println("Exiting");
                     running = false;
                     break;

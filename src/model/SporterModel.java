@@ -25,6 +25,16 @@ public class SporterModel extends UserModel {
         return gender;
     }
 
+    @Overrid
+    public String getRole() {
+        return "Sporter";
+    }
+
+    @Override
+    public String getProfileDetails() {
+        return "Name: " + name + "\nAge: " + age + "\nGender: " + gender;
+    }
+
     public void setName(String name) { this.name = name; }
     public void setAge(int age) { this.age = age; }
     public void setGender(String gender) { this.gender = gender; }

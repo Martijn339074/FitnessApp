@@ -19,6 +19,13 @@ CREATE TABLE IF NOT EXISTS sporters (
     gender VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS coaches (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+    name VARCHAR(255) NOT NULL,
+    specialty VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS exercises (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE,
@@ -29,7 +36,8 @@ CREATE TABLE IF NOT EXISTS exercises (
 INSERT INTO users (username, password, email, phone, address)
 VALUES
   ('john', 'password', 'john@email.com', '0612345678', 'Utrecht'),
-  ('jane', 'password', 'jane@email.com', '0687654321', 'Amsterdam')
+  ('jane', 'password', 'jane@email.com', '0687654321', 'Amsterdam'),
+  ('alex', 'password', 'alex@email.com', '0611111111', 'Rotterdam')
 ON CONFLICT (username) DO NOTHING;
 
 INSERT INTO sporters (user_id, name, age, gender)
@@ -40,6 +48,11 @@ ON CONFLICT (user_id) DO NOTHING;
 INSERT INTO sporters (user_id, name, age, gender)
 SELECT u.id, 'Jane Smith', 30, 'Female'
 FROM users u WHERE u.username = 'jane'
+ON CONFLICT (user_id) DO NOTHING;
+
+INSERT INTO coaches (user_id, name, specialty)
+SELECT u.id, 'Alex Coach', 'Strength'
+FROM users u WHERE u.username = 'alex'
 ON CONFLICT (user_id) DO NOTHING;
 
 INSERT INTO exercises (name, muscle_group, description)

@@ -52,7 +52,7 @@ public class UserController {
         }
 
         currentUser = user;
-        view.showMessage("Welcome, " + user.getUsername() + ".");
+        view.showMessage("Welcome, " + user.getUsername() + " (" + user.getRole() + ").");
         runAccountMenu();
     }
 

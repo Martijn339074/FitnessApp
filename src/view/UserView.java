@@ -22,10 +22,15 @@ public class UserView {
 
     public void showUserInfo(UserModel user) {
         System.out.println("\n--- My Information ---");
+        System.out.println("Role: " + user.getRole());
         System.out.println("Username: " + user.getUsername());
         System.out.println("Email: " + user.getEmail());
         System.out.println("Phone: " + user.getPhone());
         System.out.println("Address: " + user.getAddress());
+        String details = user.getProfileDetails();
+        if (!details.isEmpty()) {
+            System.out.println(details);
+        }
     }
 
     public void showUpdateHeader() {

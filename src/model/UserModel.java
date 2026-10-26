@@ -41,6 +41,14 @@ public class UserModel {
     public String getAddress() {
         return address;
     }
+
+    public String getRole() {
+        return "User";
+    }
+
+    public String getProfileDetails() {
+        return "";
+    }
     
     public void setId(int id) {
         this.id = id;
