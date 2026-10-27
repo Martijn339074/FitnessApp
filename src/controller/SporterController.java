@@ -65,9 +65,16 @@ public class SporterController {
         scanner.nextLine();
         view.prompt("Gender");
         String gender = scanner.nextLine();
+        view.prompt("Weight (kg)");
+        double weightKg = scanner.nextDouble();
+        scanner.nextLine();
+        view.prompt("Height (cm)");
+        double heightCm = scanner.nextDouble();
+        scanner.nextLine();
 
         SporterModel sporter = new SporterModel(
-            0, username, password, email, phone, address, name, age, gender
+            0, username, password, email, phone, address, name, age, gender,
+            weightKg, heightCm
         );
 
         if (sporterDAO.create(sporter)) {

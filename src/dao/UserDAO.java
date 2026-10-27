@@ -13,7 +13,7 @@ public class UserDAO {
     public UserModel findByUsername(String username) {
         String sql = """
             SELECT u.id, u.username, u.password, u.email, u.phone, u.address,
-                   s.name AS sporter_name, s.age, s.gender,
+                   s.name AS sporter_name, s.age, s.gender, s.weight_kg, s.height_cm,
                    c.name AS coach_name, c.specialty
             FROM users u
             LEFT JOIN sporters s ON s.user_id = u.id
@@ -100,7 +100,9 @@ public class UserDAO {
                 id, username, password, email, phone, address,
                 rs.getString("sporter_name"),
                 rs.getInt("age"),
-                rs.getString("gender")
+                rs.getString("gender"),
+                rs.getDouble("weight_kg"),
+                rs.getDouble("height_cm")
             );
         }
         if (rs.getString("coach_name") != null) {

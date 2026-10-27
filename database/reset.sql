@@ -20,7 +20,9 @@ CREATE TABLE sporters (
     user_id INT NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
     name VARCHAR(255) NOT NULL,
     age INT NOT NULL,
-    gender VARCHAR(255) NOT NULL
+    gender VARCHAR(255) NOT NULL,
+    weight_kg NUMERIC(5, 1) NOT NULL,
+    height_cm NUMERIC(5, 1) NOT NULL
 );
 
 CREATE TABLE coaches (
@@ -43,12 +45,12 @@ VALUES
   ('jane', 'password', 'jane@email.com', '0687654321', 'Amsterdam'),
   ('alex', 'password', 'alex@email.com', '0611111111', 'Rotterdam');
 
-INSERT INTO sporters (user_id, name, age, gender)
-SELECT u.id, 'John Doe', 25, 'Male'
+INSERT INTO sporters (user_id, name, age, gender, weight_kg, height_cm)
+SELECT u.id, 'John Doe', 25, 'Male', 82.0, 180.0
 FROM users u WHERE u.username = 'john';
 
-INSERT INTO sporters (user_id, name, age, gender)
-SELECT u.id, 'Jane Smith', 30, 'Female'
+INSERT INTO sporters (user_id, name, age, gender, weight_kg, height_cm)
+SELECT u.id, 'Jane Smith', 30, 'Female', 64.0, 168.0
 FROM users u WHERE u.username = 'jane';
 
 INSERT INTO coaches (user_id, name, specialty)

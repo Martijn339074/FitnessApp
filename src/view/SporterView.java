@@ -10,6 +10,9 @@ public class SporterView {
         System.out.println("Name: " + sporter.getName());
         System.out.println("Age: " + sporter.getAge());
         System.out.println("Gender: " + sporter.getGender());
+        System.out.println("Weight (kg): " + sporter.getWeightKg());
+        System.out.println("Height (cm): " + sporter.getHeightCm());
+        System.out.printf("BMI: %.1f%n", sporter.calculateBmi());
         System.out.println("Email: " + sporter.getEmail());
         System.out.println("Phone: " + sporter.getPhone());
         System.out.println("Address: " + sporter.getAddress());

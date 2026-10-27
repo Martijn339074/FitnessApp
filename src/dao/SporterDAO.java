@@ -14,7 +14,7 @@ public class SporterDAO {
         List<SporterModel> sporters = new ArrayList<>();
         String sql = """
             SELECT u.id, u.username, u.email, u.phone, u.address,
-                   s.name, s.age, s.gender
+                   s.name, s.age, s.gender, s.weight_kg, s.height_cm
             FROM sporters s
             JOIN users u ON s.user_id = u.id
             ORDER BY s.id
@@ -40,8 +40,8 @@ public class SporterDAO {
             RETURNING id
             """;
         String sporterSql = """
-            INSERT INTO sporters (user_id, name, age, gender)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO sporters (user_id, name, age, gender, weight_kg, height_cm)
+            VALUES (?, ?, ?, ?, ?, ?)
             """;
 
         Connection conn = null;
@@ -71,6 +71,8 @@ public class SporterDAO {
                 sporterStmt.setString(2, sporter.getName());
                 sporterStmt.setInt(3, sporter.getAge());
                 sporterStmt.setString(4, sporter.getGender());
+                sporterStmt.setDouble(5, sporter.getWeightKg());
+                sporterStmt.setDouble(6, sporter.getHeightCm());
                 sporterStmt.executeUpdate();
             }
 
@@ -107,7 +109,9 @@ public class SporterDAO {
             rs.getString("address"),
             rs.getString("name"),
             rs.getInt("age"),
-            rs.getString("gender")
+            rs.getString("gender"),
+            rs.getDouble("weight_kg"),
+            rs.getDouble("height_cm")
         );
     }
 }
