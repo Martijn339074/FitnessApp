@@ -47,6 +47,11 @@ public class SporterModel extends UserModel {
         return weightKg / (heightM * heightM);
     }
 
+    public boolean isHealthy() {
+        double bmi = calculateBmi();
+        return bmi >= 18.5 && bmi < 25.0;
+    }
+
     @Override
     public String getRole() {
         return "Sporter";

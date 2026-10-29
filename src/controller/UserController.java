@@ -1,7 +1,11 @@
 package controller;
 
 import java.util.Scanner;
+import dao.CoachDAO;
+import dao.SporterDAO;
 import dao.UserDAO;
+import model.CoachModel;
+import model.SporterModel;
 import model.UserModel;
 import view.UserView;
 
@@ -9,6 +13,8 @@ public class UserController {
     private UserView view;
     private Scanner scanner;
     private UserDAO userDAO = new UserDAO();
+    private SporterDAO sporterDAO = new SporterDAO();
+    private CoachDAO coachDAO = new CoachDAO();
     private UserModel currentUser;
 
     public UserController(UserView view, Scanner scanner) {
@@ -29,12 +35,87 @@ public class UserController {
         String email = readRequired("Email");
         String phone = readRequired("Phone");
         String address = readRequired("Address");
+        int role = readRole();
 
-        UserModel user = new UserModel(0, username, password, email, phone, address);
-        if (userDAO.create(user)) {
+        boolean created;
+        if (role == 1) {
+            created = signUpSporter(username, password, email, phone, address);
+        } else {
+            created = signUpCoach(username, password, email, phone, address);
+        }
+
+        if (created) {
             view.showMessage("Account created. You can log in now.");
         } else {
             view.showMessage("Could not create account. Check that the username is unique.");
+        }
+    }
+
+    private boolean signUpSporter(String username, String password, String email, String phone, String address) {
+        String name = readRequired("Name");
+        int age = readPositiveInt("Age");
+        String gender = readRequired("Gender");
+        double weightKg = readPositiveDouble("Weight (kg)");
+        double heightCm = readPositiveDouble("Height (cm)");
+
+        SporterModel sporter = new SporterModel(
+            0, username, password, email, phone, address,
+            name, age, gender, weightKg, heightCm
+        );
+        if (!sporterDAO.create(sporter)) {
+            return false;
+        }
+        view.showBmi(sporter);
+        return true;
+    }
+
+    private boolean signUpCoach(String username, String password, String email, String phone, String address) {
+        String name = readRequired("Name");
+        String specialty = readRequired("Specialty");
+        CoachModel coach = new CoachModel(
+            0, username, password, email, phone, address, name, specialty
+        );
+        return coachDAO.create(coach);
+    }
+
+    private int readRole() {
+        while (true) {
+            view.showRolePrompt();
+            String choice = scanner.nextLine().trim();
+            if (choice.equals("1") || choice.equals("2")) {
+                return Integer.parseInt(choice);
+            }
+            view.showMessage("Choose 1 for sporter or 2 for coach.");
+        }
+    }
+
+    private int readPositiveInt(String label) {
+        while (true) {
+            String value = readRequired(label);
+            try {
+                int number = Integer.parseInt(value);
+                if (number > 0) {
+                    return number;
+                }
+            } catch (NumberFormatException ignored) {
+                // Ask again below.
+            }
+            view.showMessage(label + " must be a whole number greater than 0.");
+        }
+    }
+
+    private double readPositiveDouble(String label) {
+        while (true) {
+            String value = readRequired(label).replace(',', '.');
+            try {
+                double number = Double.parseDouble(value);
+                if (number > 0) {
+                    return number;
+                }
+            } catch (NumberFormatException ignored) {
+                // Ask again below.
+            }
+            view.showMessage(label + " must be a number greater than 0.");
         }
     }
 
@@ -60,24 +141,23 @@ public class UserController {
         boolean loggedIn = true;
 
         while (loggedIn) {
-            view.showAccountMenu(currentUser.getUsername());
+            boolean sporter = currentUser instanceof SporterModel;
+            view.showAccountMenu(currentUser);
             int choice = scanner.nextInt();
             scanner.nextLine();
 
-            switch (choice) {
-                case 1:
-                    view.showUserInfo(currentUser);
-                    break;
-                case 2:
-                    updateInformation();
-                    break;
-                case 3:
-                    view.showMessage("Logged out.");
-                    currentUser = null;
-                    loggedIn = false;
-                    break;
-                default:
-                    view.showMessage("Invalid choice.");
+            if (choice == 1) {
+                view.showUserInfo(currentUser);
+            } else if (choice == 2) {
+                updateInformation();
+            } else if (sporter && choice == 3) {
+                view.showBmi((SporterModel) currentUser);
+            } else if (choice == (sporter ? 4 : 3)) {
+                view.showMessage("Logged out.");
+                currentUser = null;
+                loggedIn = false;
+            } else {
+                view.showMessage("Invalid choice.");
             }
         }
     }
